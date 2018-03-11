@@ -4,16 +4,18 @@ project(mv_camera_ros)
 ###############################################################################
 # PACKAGES
 
-message("++++++++++++++++++++++++++")
-set(OPENCV_DIRS "" CACHE PATH "")
+#message("++++++++++++++++++++++++++")
+#set(OPENCV_DIRS "" CACHE PATH "")
 
-if(OPENCV_DIRS STREQUAL "")
-  message(SEND_ERROR "OpenCV path is absent. Please, read the project README.md file.")
-else()
-  message("OpenCV path: " ${OPENCV_DIRS})
-endif()
+#if(OPENCV_DIRS STREQUAL "")
+#  message(SEND_ERROR "OpenCV path is absent. Please, read the project README.md file.")
+#else()
+#  message("OpenCV path: " ${OPENCV_DIRS})
+#endif()
 
-find_package(OpenCV 3.3 COMPONENTS core highgui imgproc aruco PATHS ${OPENCV_DIRS} REQUIRED NO_DEFAULT_PATH)
+#find_package( COMPONENTS core highgui imgproc aruco PATHS ${OPENCV_DIRS} REQUIRED NO_DEFAULT_PATH)
+
+find_package(OpenCV REQUIRED)
 #if(CUDA_DIRS STREQUAL "")
 #  find_package(CUDA REQUIRED)
 #else()

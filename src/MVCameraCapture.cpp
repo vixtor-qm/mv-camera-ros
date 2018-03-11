@@ -97,15 +97,18 @@ void MVCameraCapture::open(int32_t device_id)
     throw DeviceError(stream.str());
   }
 
-  iStatus = CameraInit(&tCameraEnumList,-1,-1,& hCamera_);
+  iStatus = CameraInit(&tCameraEnumList,-1,-1, &hCamera_);
+  std::cout << "hCamera = " << hCamera_ << std::endl;
 
   if(iStatus!=CAMERA_STATUS_SUCCESS)
   {
-    std::stringstream stream;
+    std::stringstream stream;		
     stream << "device_id" << device_id << " cannot be opened";
     throw DeviceError(stream.str());
   }
 
+  CameraGetCapability(hCamera_,&tCapability);
+  std::cout << "buffer size" <<  tCapability.sResolutionRange.iHeightMax*tCapability.sResolutionRange.iWidthMax*3 << std::endl;
   rgbBuffer_ = (unsigned char*)malloc(tCapability.sResolutionRange.iHeightMax*tCapability.sResolutionRange.iWidthMax*3);
 
   CameraPlay(hCamera_);
@@ -124,7 +127,7 @@ void MVCameraCapture::open(int32_t device_id)
 
   pub_ = it_.advertiseCamera(topic_name_, buffer_size_);
 
-  loadCameraInfo();
+  //loadCameraInfo();
 }
 
 void MVCameraCapture::open()
@@ -134,8 +137,7 @@ void MVCameraCapture::open()
 
 bool MVCameraCapture::capture()
 {
-  //if (cap_.read(bridge_.image))
-   uchar * pbyBuffer;
+  uchar * pbyBuffer =0;
   if(CameraGetImageBuffer(hCamera_, &frameInfo_,&pbyBuffer,1000) == CAMERA_STATUS_SUCCESS)
   {
     CameraImageProcess(hCamera_, pbyBuffer, rgbBuffer_, &frameInfo_);
