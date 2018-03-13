@@ -142,7 +142,7 @@ void MVCameraCapture::open(int32_t device_id)
 void MVCameraCapture::open()
 {
   open(0);
-   CameraSetAeState(hCamera_,FALSE);
+  // CameraSetAeState(hCamera_,FALSE);
 ;
 }
 
